@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\.Net Core\\New folder\\ToDo\\ToDo.csproj": {}
+    "F:\\.Net Core\\Solve Tasks\\ToDoLsit Project\\ToDo\\ToDo.csproj": {}
   },
   "projects": {
-    "F:\\.Net Core\\New folder\\ToDo\\ToDo.csproj": {
+    "F:\\.Net Core\\Solve Tasks\\ToDoLsit Project\\ToDo\\ToDo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\.Net Core\\New folder\\ToDo\\ToDo.csproj",
+        "projectUniqueName": "F:\\.Net Core\\Solve Tasks\\ToDoLsit Project\\ToDo\\ToDo.csproj",
         "projectName": "ToDo",
-        "projectPath": "F:\\.Net Core\\New folder\\ToDo\\ToDo.csproj",
+        "projectPath": "F:\\.Net Core\\Solve Tasks\\ToDoLsit Project\\ToDo\\ToDo.csproj",
         "packagesPath": "C:\\Users\\abdel\\.nuget\\packages\\",
-        "outputPath": "F:\\.Net Core\\New folder\\ToDo\\obj\\",
+        "outputPath": "F:\\.Net Core\\Solve Tasks\\ToDoLsit Project\\ToDo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,22 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.12, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

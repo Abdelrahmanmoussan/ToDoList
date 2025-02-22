@@ -1,0 +1,94 @@
+﻿@model List<ToDo.Models.TodoList>
+
+@{
+    ViewData["Title"] = "To-Do List";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-light rounded shadow-sm">
+        <h2 class="text-primary m-0">📋 To-Do List</h2>
+        <a class="btn btn-success btn-lg" href="/TodoList/Create">➕ Create To-Do Item</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered text-center align-middle shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var todo in Model)
+                    {
+                        <tr>
+                            <td><strong>@todo.Name</strong></td>
+                            <td>@todo.Description</td>
+                            <td>@todo.Date.ToShortDateString()</td>
+                            <td>@todo.Time</td>
+                            <td>
+                                @if (todo.Img != null)
+                                {
+                                    <img src="/images/@todo.Img" alt="To-Do Image" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+                                    <br />
+                                    <a href="/images/@todo.Img" download class="btn btn-primary btn-sm mt-2">⬇ Download</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No Image</span>
+                                }
+                                @if (todo.Pdf != null)
+                                {
+                                    <br />
+                                    @* <a href="/images/@todo.Pdf" download class="btn btn-secondary btn-sm mt-2">📄 Download PDF</a> *@
+                                    <a href="@todo.Pdf" download class="btn btn-secondary btn-sm mt-2">📄 Download PDF</a>
+
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="TodoList" asp-action="Edit" asp-route-id="@todo.Id" class="btn btn-warning btn-sm">✏ Edit</a>
+                                <form id="deleteForm-@todo.Id" method="post" asp-controller="TodoList" asp-action="Delete" style="display: inline;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Id" value="@todo.Id" />
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(@todo.Id)">🗑 Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">🚫 No to-do items found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(todoId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("deleteForm-" + todoId).submit();
+            }
+        });
+    }
+</script>

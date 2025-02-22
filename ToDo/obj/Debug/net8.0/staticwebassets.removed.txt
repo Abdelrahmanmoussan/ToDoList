@@ -1,0 +1,2 @@
+F:\.Net Core\Solve Tasks\ToDoLsit Project\ToDo\wwwroot\images\3bfe8010-60ab-4791-82f0-6b781c3d97d4.jpg
+F:\.Net Core\Solve Tasks\ToDoLsit Project\ToDo\wwwroot\uploads\013a8336-81e8-473b-b6a3-c6648f943942.pdf

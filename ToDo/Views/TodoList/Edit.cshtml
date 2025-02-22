@@ -1,0 +1,100 @@
+﻿@model TodoList
+
+<div class="container my-3">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h1>Edit List</h1>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <div class="mb-3">
+                    <label for="Name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name">
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Product Description</label>
+                    <input type="text" class="form-control" id="Description" name="Description" value="@Model.Description">
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="Date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="Date" name="Date" value="@Model.Date">
+                </div>
+                <div class="mb-3">
+                    <label for="Time" class="form-label">Time</label>
+                    <input type="time" class="form-control" id="Time" name="Time" value="@Model.Time">
+                    <span class="text-danger" asp-validation-for="Time"></span>
+                </div>
+
+                <!-- Image Upload Section -->
+                <div class="mb-3">
+                    <label for="Img" class="form-label">Image</label>
+                    <input type="file" class="form-control" id="Img" name="file" accept="image/*" onchange="previewImage(event)">
+                    <div class="mt-3 position-relative" style="max-width: 20%;">
+                        <img id="imgPreview" src="~/images/@Model.Img" alt="Image Preview" style="width: 100%; height: auto; display: block;" />
+                        <a href="TodoList/DeleteImg?TodoId=@Model.Id" class="btn btn-danger btn-sm position-absolute top-0 end-0" style="transform: translate(50%, -50%);" onclick="deleteImage()">X</a>
+                    </div>
+                    <span class="text-danger" asp-validation-for="Img"></span>
+                </div>
+
+                <!-- PDF Upload Section -->
+                <div class="mb-3">
+                    <label for="Pdf" class="form-label">Upload PDF</label>
+                    <input type="file" class="form-control" id="Pdf" name="pdfFile" accept="application/pdf" onchange="previewPdf(event)">
+                    <div class="mt-3">
+                        @if (!string.IsNullOrEmpty(Model.Pdf))
+                        {
+                            <iframe id="pdfPreview" src="@Model.Pdf" width="100%" height="300px"></iframe>
+                            <a href="TodoList/DeletePdf?TodoId=@Model.Id" class="btn btn-danger btn-sm mt-2">Delete PDF</a>
+                        }
+                    </div>
+                    <span class="text-danger" asp-validation-for="Pdf"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        const imgPreview = document.getElementById('imgPreview');
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            imgPreview.style.display = 'none';
+            imgPreview.src = '';
+        }
+    }
+
+    function deleteImage() {
+        document.getElementById('imgPreview').src = '';
+        document.getElementById('imgPreview').style.display = 'none';
+        document.getElementById('Img').value = '';
+    }
+
+    function previewPdf(event) {
+        const pdfPreview = document.getElementById('pdfPreview');
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                pdfPreview.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
